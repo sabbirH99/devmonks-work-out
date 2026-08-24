@@ -17,6 +17,7 @@ function: openFAQ(), closeFAQ()
 const faqs = document.querySelectorAll(".faq");
 
 function openFAQ(faq) {
+    // console.log(Date.now());
     const answer = faq.querySelector(".faq-answer");
 
     faq.classList.add("is-open");
@@ -32,14 +33,23 @@ function openFAQ(faq) {
         ],
         {
             duration: 400,
-            easing: "ease"
+            easing: "ease",
+            fill: "forwards"
         }
     );
+
+    // animation.finished.then(() => {
+    //     console.log("Animation completed!");
+    //     console.log(Date.now());
+
+    //     // Put the code you want to run after the animation here
+    // });
 }
 
 
 function closeFAQ(faq) {
     const answer = faq.querySelector(".faq-answer");
+    faq.classList.remove("is-open");
 
     answer.animate(
         [
@@ -52,16 +62,19 @@ function closeFAQ(faq) {
         ],
         {
             duration: 300,
+            easing: "ease",
             fill: "forwards"
         }
     );
+
+
 }
 
 
 faqs.forEach((faq) => {
     const button = faq.querySelector(".faq-question");
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
         const isOpen = faq.classList.contains("is-open");
 
         // close all other FAQs
@@ -72,7 +85,7 @@ faqs.forEach((faq) => {
         });
 
         // toggle clicked FAQ
-        if(isOpen) {
+        if (isOpen) {
             closeFAQ(faq);
         } else {
             openFAQ(faq);
