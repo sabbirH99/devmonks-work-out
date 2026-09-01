@@ -37,36 +37,52 @@ const products = [
     }
 ];
 
-const productWrapper = document.getElementsByClassName("products");
+const productWrapperList = document.getElementsByClassName("products");
+const targetProductsWrapper = productWrapperList[0];
 
-products.map(function (object) {
-    createProductCard(object);
+let productCards = products.map(function (product) {
+    let productCard = createProductCard(product);
+
+    return productCard;
 });
 
-function createProductCard(object) {
-    const parent = document.createElement("div");
-    parent.classList.add("product-card");
-    parent.dataset.category = object.category.toLowerCase();
+
+function createProductCard(product) {
+    const productCard = document.createElement("div");
+    productCard.classList.add("product-card");
+    productCard.dataset.category = product.category.toLowerCase();
 
     const image = document.createElement("img");
-    image.setAttribute("src", object.image);
+    image.setAttribute("src", product.image);
 
     const title = document.createElement("h2");
-    title.textContent = object.name;
+    title.textContent = product.name;
 
     const price = document.createElement("p");
-    price.textContent = "$" + object.price;
+    price.textContent = "$" + product.price;
 
     const category = document.createElement("span");
-    category.textContent = object.category;
+    category.textContent = product.category;
 
-    parent.appendChild(image);
-    parent.appendChild(title);
-    parent.appendChild(price);
-    parent.appendChild(category);
+    productCard.appendChild(image);
+    productCard.appendChild(title);
+    productCard.appendChild(price);
+    productCard.appendChild(category);
 
-    productWrapper[0].appendChild(parent);
+    // productWrapperList[0].appendChild(productCard);
+
+    return productCard;
 }
+
+renderProductCards(productCards, targetProductsWrapper);
+
+function renderProductCards (productCards, targetElement) {
+    productCards.forEach(card => {
+        console.log(targetElement, card);
+        targetElement.appendChild(card);
+    });
+}
+
 
 const productItems = document.querySelectorAll(".product-card");
 
