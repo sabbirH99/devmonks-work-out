@@ -1,3 +1,11 @@
+// product 
+//  create a template
+// filter products
+// render products
+// update product
+// events 
+//  initial load
+
 const products = [
     {
         name: "iPhone 16",
@@ -37,14 +45,11 @@ const products = [
     }
 ];
 
-const productWrapperList = document.getElementsByClassName("products");
-const targetProductsWrapper = productWrapperList[0];
+const productWrapperList = document.getElementById("products");
+const productTabWrapper = document.querySelector(".product-tab-wrapper")
 
-let productCards = products.map(function (product) {
-    let productCard = createProductCard(product);
-
-    return productCard;
-});
+let activeFilter = "All";
+let searchValue = "";
 
 
 function createProductCard(product) {
@@ -69,99 +74,107 @@ function createProductCard(product) {
     productCard.appendChild(price);
     productCard.appendChild(category);
 
-    // productWrapperList[0].appendChild(productCard);
-
     return productCard;
 }
 
-renderProductCards(productCards, targetProductsWrapper);
 
-function renderProductCards (productCards, targetElement) {
-    productCards.forEach(card => {
-        console.log(targetElement, card);
-        targetElement.appendChild(card);
+
+function filterProducts(searchValue, selectedCategory, products) {
+    return products.filter(
+        function (product) {
+            const matchesCategory = selectedCategory.toLowerCase() === "all" ||
+                product.category.toLowerCase() === selectedCategory.toLowerCase();
+
+            const matchesSearch = product.name.toLowerCase().includes(searchValue.toLowerCase());
+
+            return matchesCategory && matchesSearch;
+        }
+    )
+}
+
+function renderProductCards(products, targetElement) {
+    targetElement.innerHTML = "";
+
+    const productCards = products.map(function (product) {
+        return createProductCard(product);
+    })
+
+    productCards.forEach(function (productCard) {
+        targetElement.appendChild(productCard);
     });
 }
 
+function getCategories(products) {
+    const categoryArray = ["All"];
 
-const productItems = document.querySelectorAll(".product-card");
+    products.forEach(function (product) {
+        const category = product.category;
 
-let categoryArray = ["All"];
+        if (!categoryArray.includes(category)) {
+            categoryArray.push(category);
+        }
+    });
 
-productItems.forEach(element => {
-    const category = element.querySelector("span").textContent;
+    return categoryArray;
+}
 
-    if (categoryArray.includes(category)) {
-        return;
-    }
+function renderProductTabs(categoryArray, targetElement) {
+    const productTabInner = document.createElement("div");
+    productTabInner.classList.add("product-tab-inner");
 
-    categoryArray.push(category);
+    categoryArray.forEach(function (category) {
+        const tab = document.createElement("a");
+
+        tab.setAttribute("href", "#");
+        tab.classList.add("product-tab-link");
+        tab.textContent = category;
+
+        if (category === "All") {
+            tab.classList.add("is-active");
+        }
+
+        productTabInner.appendChild(tab);
+    });
+
+    targetElement.appendChild(productTabInner);
+}
+
+
+function updateProducts() {
+    const filteredProducts = filterProducts(searchValue, activeFilter, products);
+    renderProductCards(filteredProducts, productWrapperList);
+
+}
+
+
+
+window.addEventListener("DOMContentLoaded", () => {
+    updateProducts();
+    renderProductTabs(getCategories(products), productTabWrapper);
+
+    const categoryLinks = document.querySelectorAll(".product-tab-link");
+
+    categoryLinks.forEach(tab => {
+        tab.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            activeFilter = tab.textContent;
+
+            categoryLinks.forEach(tab => {
+                tab.classList.remove("is-active");
+            });
+
+            tab.classList.add("is-active");
+
+            updateProducts();
+        });
+    });
 });
-
-const productTab = document.createElement("div");
-productTab.classList.add("product-tab");
-
-categoryArray.forEach(item => {
-    const productTabLinks = document.createElement("a");
-
-    productTabLinks.setAttribute("href", "#");
-    productTabLinks.classList.add("product-tab-link");
-    productTabLinks.textContent = item;
-    productTabLinks.dataset.filter = item.toLowerCase();
-
-    productTab.appendChild(productTabLinks);
-});
-
-const productTabWrapper = document.querySelector(".product-tab-wrapper");
-
-productTabWrapper.appendChild(productTab);
-
-const categoryLinks = document.querySelectorAll(".product-tab-link");
-const activeTab = document.querySelector("[data-filter='all']");
-activeTab.classList.add("is-active");
 
 const searchInput = document.querySelector(".product-search");
 
-let activeFilter = "all";
-let searchValue = "";
-
-function filterProducts() {
-    productItems.forEach(product => {
-        const category = product.dataset.category;
-        const text = product.textContent.toLowerCase();
-
-        const matchesCategory =
-            activeFilter === "all" || category === activeFilter;
-
-        const matchesSearch =
-            text.includes(searchValue);
-
-        if (matchesCategory && matchesSearch) {
-            product.style.display = "block";
-        } else {
-            product.style.display = "none";
-        }
-    });
-}
-
-categoryLinks.forEach(tab => {
-    tab.addEventListener("click", function (e) {
-        e.preventDefault();
-
-        activeFilter = tab.dataset.filter;
-
-        categoryLinks.forEach(tab => {
-            tab.classList.remove("is-active");
-        });
-
-        tab.classList.add("is-active");
-
-        filterProducts();
-    });
-});
-
 searchInput.addEventListener("input", function () {
-    searchValue = searchInput.value.toLowerCase();
+    searchValue = searchInput.value;
 
-    filterProducts();
+    updateProducts();
 });
