@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f0f0f;
+    color: #f5f5f5;
+}
+
+.container {
+    width: min(100% - 40px, 1100px);
+    margin: 60px auto;
+}
+
+h1 {
+    margin: 0 0 30px;
+}
+
+.posts-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.post-card {
+    padding: 24px;
+    background: #1a1a1a;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+}
+
+.post-card h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
+.post-card p {
+    margin: 0 0 16px;
+    color: #999;
+    line-height: 1.6;
+}
+
+.post-author {
+    color: #f5f5f5;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .posts-container {
+        grid-template-columns: 1fr;
+    }
+}
