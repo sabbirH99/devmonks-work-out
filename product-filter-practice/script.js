@@ -1,3 +1,11 @@
+// product 
+//  create a template
+// filter products
+// render products
+// update product
+// events 
+//  initial load
+
 const products = [
     {
         name: "iPhone 16",
@@ -37,115 +45,136 @@ const products = [
     }
 ];
 
-const productWrapper = document.getElementsByClassName("products");
+const productWrapperList = document.getElementById("products");
+const productTabWrapper = document.querySelector(".product-tab-wrapper")
 
-products.map(function (object) {
-    createProductCard(object);
-});
+let activeFilter = "All";
+let searchValue = "";
 
-function createProductCard(object) {
-    const parent = document.createElement("div");
-    parent.classList.add("product-card");
-    parent.dataset.category = object.category.toLowerCase();
+
+function createProductCard(product) {
+    const productCard = document.createElement("div");
+    productCard.classList.add("product-card");
+    productCard.dataset.category = product.category.toLowerCase();
 
     const image = document.createElement("img");
-    image.setAttribute("src", object.image);
+    image.setAttribute("src", product.image);
 
     const title = document.createElement("h2");
-    title.textContent = object.name;
+    title.textContent = product.name;
 
     const price = document.createElement("p");
-    price.textContent = "$" + object.price;
+    price.textContent = "$" + product.price;
 
     const category = document.createElement("span");
-    category.textContent = object.category;
+    category.textContent = product.category;
 
-    parent.appendChild(image);
-    parent.appendChild(title);
-    parent.appendChild(price);
-    parent.appendChild(category);
+    productCard.appendChild(image);
+    productCard.appendChild(title);
+    productCard.appendChild(price);
+    productCard.appendChild(category);
 
-    productWrapper[0].appendChild(parent);
+    return productCard;
 }
 
-const productItems = document.querySelectorAll(".product-card");
 
-let categoryArray = ["All"];
 
-productItems.forEach(element => {
-    const category = element.querySelector("span").textContent;
+function filterProducts(searchValue, selectedCategory, products) {
+    return products.filter(
+        function (product) {
+            const matchesCategory = selectedCategory.toLowerCase() === "all" ||
+                product.category.toLowerCase() === selectedCategory.toLowerCase();
 
-    if (categoryArray.includes(category)) {
-        return;
-    }
+            const matchesSearch = product.name.toLowerCase().includes(searchValue.toLowerCase());
 
-    categoryArray.push(category);
+            return matchesCategory && matchesSearch;
+        }
+    )
+}
+
+function renderProductCards(products, targetElement) {
+    targetElement.innerHTML = "";
+
+    const productCards = products.map(function (product) {
+        return createProductCard(product);
+    })
+
+    productCards.forEach(function (productCard) {
+        targetElement.appendChild(productCard);
+    });
+}
+
+function getCategories(products) {
+    const categoryArray = ["All"];
+
+    products.forEach(function (product) {
+        const category = product.category;
+
+        if (!categoryArray.includes(category)) {
+            categoryArray.push(category);
+        }
+    });
+
+    return categoryArray;
+}
+
+function renderProductTabs(categoryArray, targetElement) {
+    const productTabInner = document.createElement("div");
+    productTabInner.classList.add("product-tab-inner");
+
+    categoryArray.forEach(function (category) {
+        const tab = document.createElement("a");
+
+        tab.setAttribute("href", "#");
+        tab.classList.add("product-tab-link");
+        tab.textContent = category;
+
+        if (category === "All") {
+            tab.classList.add("is-active");
+        }
+
+        productTabInner.appendChild(tab);
+    });
+
+    targetElement.appendChild(productTabInner);
+}
+
+
+function updateProducts() {
+    const filteredProducts = filterProducts(searchValue, activeFilter, products);
+    renderProductCards(filteredProducts, productWrapperList);
+
+}
+
+
+
+window.addEventListener("DOMContentLoaded", () => {
+    updateProducts();
+    renderProductTabs(getCategories(products), productTabWrapper);
+
+    const categoryLinks = document.querySelectorAll(".product-tab-link");
+
+    categoryLinks.forEach(tab => {
+        tab.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            activeFilter = tab.textContent;
+
+            categoryLinks.forEach(tab => {
+                tab.classList.remove("is-active");
+            });
+
+            tab.classList.add("is-active");
+
+            updateProducts();
+        });
+    });
 });
-
-const productTab = document.createElement("div");
-productTab.classList.add("product-tab");
-
-categoryArray.forEach(item => {
-    const productTabLinks = document.createElement("a");
-
-    productTabLinks.setAttribute("href", "#");
-    productTabLinks.classList.add("product-tab-link");
-    productTabLinks.textContent = item;
-    productTabLinks.dataset.filter = item.toLowerCase();
-
-    productTab.appendChild(productTabLinks);
-});
-
-const productTabWrapper = document.querySelector(".product-tab-wrapper");
-
-productTabWrapper.appendChild(productTab);
-
-const categoryLinks = document.querySelectorAll(".product-tab-link");
-const activeTab = document.querySelector("[data-filter='all']");
-activeTab.classList.add("is-active");
 
 const searchInput = document.querySelector(".product-search");
 
-let activeFilter = "all";
-let searchValue = "";
-
-function filterProducts() {
-    productItems.forEach(product => {
-        const category = product.dataset.category;
-        const text = product.textContent.toLowerCase();
-
-        const matchesCategory =
-            activeFilter === "all" || category === activeFilter;
-
-        const matchesSearch =
-            text.includes(searchValue);
-
-        if (matchesCategory && matchesSearch) {
-            product.style.display = "block";
-        } else {
-            product.style.display = "none";
-        }
-    });
-}
-
-categoryLinks.forEach(tab => {
-    tab.addEventListener("click", function (e) {
-        e.preventDefault();
-
-        activeFilter = tab.dataset.filter;
-
-        categoryLinks.forEach(tab => {
-            tab.classList.remove("is-active");
-        });
-
-        tab.classList.add("is-active");
-
-        filterProducts();
-    });
-});
-
 searchInput.addEventListener("input", function () {
-    searchValue = searchInput.value.toLowerCase();
+    searchValue = searchInput.value;
 
-    filterProducts();
+    updateProducts();
 });
