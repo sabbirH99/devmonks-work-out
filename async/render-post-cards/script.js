@@ -28,6 +28,7 @@ async function getPosts() {
         renderPosts(posts, users, postsContainer);
 
     } catch (error) {
+        console.error("Failed to load posts: ", error)
         postsContainer.innerHTML = "Sorry, something went wrong"
     }
 }
@@ -54,13 +55,17 @@ function createPostCard(post, author) {
     const postCard = document.createElement("div");
     postCard.classList.add("post-card");
 
-    postCard.innerHTML = `
-        <h2>${post.title}</h2>
-        <p>${post.body}</p>
-        <div class="post-author">
-            By: ${author.name}
-        </div>
-    `;
+    const title = document.createElement("h2");
+    title.textContent = post.title;
+
+    const body = document.createElement("p");
+    body.textContent = post.body;
+
+    const postAuthor = document.createElement("div");
+    postAuthor.classList.add("post-author");
+    postAuthor.textContent = `By: ${author?.name ?? "Unknown user"}`;
+    
+    postCard.append(title, body, postAuthor);
 
     return postCard;
 }
