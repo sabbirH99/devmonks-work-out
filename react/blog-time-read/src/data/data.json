@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
+    "title": "Getting Started with React",
+    "category": "Web Development",
+    "text": "React is a JavaScript library for building user interfaces. Learn components, props, and state to build fast, interactive apps."
+  },
+  {
+    "id": 2,
+    "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800",
+    "title": "Understanding JavaScript Closures",
+    "category": "JavaScript",
+    "text": "Closures let a function remember variables from its outer scope. They power callbacks, private state, and many common patterns."
+  },
+  {
+    "id": 3,
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+    "title": "Designing Better User Interfaces",
+    "category": "Design",
+    "text": "Good UI comes from clear hierarchy, consistent spacing, and readable type. Small details add up to a smooth user experience."
+  },
+  {
+    "id": 4,
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800",
+    "title": "A Beginner's Guide to Async/Await",
+    "category": "JavaScript",
+    "text": "Async/await makes asynchronous code read like synchronous code. Fetch data, handle errors with try/catch, and keep logic clean."
+  },
+  {
+    "id": 5,
+    "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800",
+    "title": "Writing Clean and Maintainable Code",
+    "category": "Best Practices",
+    "text": "Use clear names, small functions, and consistent structure. Clean code is easier to read, test, and change later."
+  }
+]

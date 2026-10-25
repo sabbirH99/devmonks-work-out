@@ -1,0 +1,227 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0f1117;
+  --surface: #181b24;
+  --border: #2a2f3d;
+  --text: #e6e8ee;
+  --text-muted: #9aa1b2;
+  --accent: #8b7cf6;
+  --success: #4ade80;
+  --danger: #f87171;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-tab {
+  padding: 0.45rem 1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.filter-tab:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.filter-tab.is-active {
+  color: #fff;
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.filter-tab:focus-visible,
+.filter-switch:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* toggle switch: track + sliding thumb */
+.filter-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: none;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.filter-switch_track {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  background-color: var(--border);
+  border-radius: 999px;
+  transition: background-color 0.2s;
+}
+
+.filter-switch_thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--text);
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.filter-switch[aria-checked="true"] {
+  color: var(--text);
+}
+
+.filter-switch[aria-checked="true"] .filter-switch_track {
+  background-color: var(--accent);
+}
+
+.filter-switch[aria-checked="true"] .filter-switch_thumb {
+  transform: translateX(18px);
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+.product-card_head {
+  position: relative;
+}
+
+.product-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.product-card_rating,
+.product-card_category {
+  position: absolute;
+  top: 0.75rem;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: rgb(15 17 23 / 0.8);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+.product-card_category {
+  left: 0.75rem;
+  color: var(--accent);
+}
+
+.product-card_rating {
+  right: 0.75rem;
+}
+
+.product-card_rating::before {
+  content: "★ ";
+  color: #facc15;
+}
+
+.product-card_body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+  padding: 1.25rem;
+}
+
+.product-card_title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.product-card_pricing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.is-in-stock {
+  padding: 0.15rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--success);
+  background-color: rgb(74 222 128 / 0.12);
+  border-radius: 999px;
+}
+
+.is-in-stock[data-in-stock="false"] {
+  color: var(--danger);
+  background-color: rgb(248 113 113 / 0.12);
+}
+
+.product-card_desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
