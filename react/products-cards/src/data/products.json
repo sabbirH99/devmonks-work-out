@@ -1,0 +1,70 @@
+{
+  "categories": [
+    { "id": 1, "name": "Audio" },
+    { "id": 2, "name": "Accessories" },
+    { "id": 3, "name": "Wearables" },
+    { "id": 4, "name": "Video" }
+  ],
+  "products": [
+  {
+    "id": 1,
+    "name": "Wireless Headphones",
+    "category": "Audio",
+    "price": 89.99,
+    "rating": 4.5,
+    "inStock": true,
+    "image": "https://picsum.photos/seed/headphones/400/300",
+    "description": "Over-ear Bluetooth headphones with noise cancelling and 30-hour battery life."
+  },
+  {
+    "id": 2,
+    "name": "Mechanical Keyboard",
+    "category": "Accessories",
+    "price": 119.0,
+    "rating": 4.7,
+    "inStock": true,
+    "image": "https://picsum.photos/seed/keyboard/400/300",
+    "description": "Compact 75% keyboard with hot-swappable switches and RGB backlight."
+  },
+  {
+    "id": 3,
+    "name": "Smart Watch",
+    "category": "Wearables",
+    "price": 199.5,
+    "rating": 4.3,
+    "inStock": false,
+    "image": "https://picsum.photos/seed/watch/400/300",
+    "description": "Fitness tracking, heart-rate monitor and a week of battery on a single charge."
+  },
+  {
+    "id": 4,
+    "name": "Portable Speaker",
+    "category": "Audio",
+    "price": 49.99,
+    "rating": 4.4,
+    "inStock": true,
+    "image": "https://picsum.photos/seed/speaker/400/300",
+    "description": "Waterproof Bluetooth speaker with deep bass and 12-hour playtime."
+  },
+  {
+    "id": 5,
+    "name": "Laptop Stand",
+    "category": "Accessories",
+    "price": 34.0,
+    "rating": 4.6,
+    "inStock": true,
+    "image": "https://picsum.photos/seed/stand/400/300",
+    "description": "Adjustable aluminium stand that raises your screen to eye level."
+  },
+  {
+    "id": 6,
+    "name": "Webcam 1080p",
+    "category": "Video",
+    "price": 59.99,
+    "rating": 4.1,
+    "inStock": true,
+    "image": "https://picsum.photos/seed/webcam/400/300",
+    "description": "Full HD webcam with built-in microphone and auto light correction."
+  }
+  ]
+}

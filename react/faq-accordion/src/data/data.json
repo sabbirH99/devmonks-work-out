@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "question": "What is React?",
+    "answer": "React is a JavaScript library for building user interfaces out of small, reusable components."
+  },
+  {
+    "id": 2,
+    "question": "What is JSX?",
+    "answer": "JSX is a syntax that lets you write HTML-like markup inside JavaScript. Vite compiles it into regular JavaScript for the browser."
+  },
+  {
+    "id": 3,
+    "question": "What is the difference between props and state?",
+    "answer": "Props are values passed into a component from its parent and are read-only. State is data a component owns and can change over time with useState."
+  },
+  {
+    "id": 4,
+    "question": "Why do list items need a key?",
+    "answer": "React uses the key to tell list items apart, so it can update, add, or remove the right ones efficiently. Use a stable, unique value such as an id."
+  },
+  {
+    "id": 5,
+    "question": "When does a component re-render?",
+    "answer": "A component re-renders when its state changes, when its props change, or when its parent re-renders."
+  },
+  {
+    "id": 6,
+    "question": "What is useEffect used for?",
+    "answer": "useEffect runs side effects after render, such as fetching data, setting up event listeners, or syncing with something outside React."
+  }
+]
